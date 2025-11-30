@@ -33,7 +33,6 @@ public class PersonService {
     public PersonModel alterPerson(Long id, PersonModel personModel){
        PersonModel person = personRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Person not found!"));
-
        PersonModel newPerson = PersonModel.builder()
                .name(personModel.getName() != null ? personModel.getName() : person.getName())
                .email(personModel.getEmail() != null ? personModel.getEmail() : person.getEmail())
