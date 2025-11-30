@@ -38,6 +38,7 @@ public class AdressService {
                 .adress(adressModel.getAdress() != null ? adressModel.getAdress() : adress.getAdress())
                 .number(adressModel.getNumber() != 0 ? adressModel.getNumber() : adress.getNumber())
                 .neighborhood(adressModel.getNeighborhood() != null ? adressModel.getNeighborhood() : adress.getNeighborhood())
+                .person(adressModel.getPerson() != null ? adressModel.getPerson() : adress.getPerson())
                 .build();
         return adressRepository.save(newAdress);
     }
