@@ -36,6 +36,7 @@ public class PersonService {
        PersonModel newPerson = PersonModel.builder()
                .name(personModel.getName() != null ? personModel.getName() : person.getName())
                .email(personModel.getEmail() != null ? personModel.getEmail() : person.getEmail())
+               .adress(personModel.getAdress() != null ? personModel.getAdress() : person.getAdress())
                .id(person.getId())
         .build();
         return personRepository.save(newPerson);

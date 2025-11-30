@@ -15,7 +15,7 @@ public class PersonModel {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false,  unique = true)
     private String email;
 
     @ManyToOne
@@ -50,6 +50,14 @@ public class PersonModel {
 
    public String getEmail() {
         return email;
+   }
+
+   public AdressModel getAdress() {
+        return adress;
+   }
+
+   public void setAdress(AdressModel adress) {
+        this.adress = adress;
    }
 
    public void setEmail(String email) {
