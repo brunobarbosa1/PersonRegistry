@@ -12,6 +12,7 @@ public class AdressMapper {
         adressModel.setAdress(adressDTO.getAdress());
         adressModel.setNumber(adressDTO.getNumber());
         adressModel.setNeighborhood(adressDTO.getNeighborhood());
+        adressModel.setPerson(adressDTO.getPerson());
         return adressModel;
     }
 
@@ -20,6 +21,7 @@ public class AdressMapper {
         adressDTO.setAdress(adressModel.getAdress());
         adressDTO.setNumber(adressModel.getNumber());
         adressDTO.setNeighborhood(adressModel.getNeighborhood());
+        adressDTO.setPerson(adressModel.getPerson());
         return adressDTO;
     }
 }
