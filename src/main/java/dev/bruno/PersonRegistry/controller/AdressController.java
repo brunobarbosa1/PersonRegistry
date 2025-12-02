@@ -1,8 +1,8 @@
 package dev.bruno.PersonRegistry.controller;
 
-import dev.bruno.PersonRegistry.model.AdressModel;
-import dev.bruno.PersonRegistry.model.PersonModel;
+import dev.bruno.PersonRegistry.dtos.AdressDTO;
 import dev.bruno.PersonRegistry.service.AdressService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,27 +18,28 @@ public class AdressController {
         this.adressService = adressService;
     }
 
-    @GetMapping("/findall")
-    public ResponseEntity<List<AdressModel>> findAll() {
+    @GetMapping("/listAll")
+    public ResponseEntity<List<AdressDTO>> findAll() {
         return adressService.findAll().isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(adressService.findAll());
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<AdressModel> findById(@PathVariable Long id) {
-        return adressService.findById(id) == null ? ResponseEntity.noContent().build() :
+    @GetMapping()
+    public ResponseEntity<AdressDTO> findById(@PathParam("id") Long id) {
+        return adressService.findById(id) == null ? ResponseEntity
+                .status(HttpStatus.NOT_FOUND).build() :
                 ResponseEntity.ok(adressService.findById(id));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PersonModel> createAdress(@RequestBody AdressModel adressModel) {
-        adressService.createPerson(adressModel);
+    public ResponseEntity<AdressDTO> createAdress(@RequestBody AdressDTO adressDTO) {
+        adressService.createPerson(adressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAdress(@PathVariable Long id) {
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteAdress(@PathParam("id") Long id) {
         if(adressService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }else{
@@ -48,8 +49,8 @@ public class AdressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdressModel> updatePerson(@PathVariable Long id, @RequestBody AdressModel adressModel) {
+    public ResponseEntity<AdressDTO> updatePerson(@PathVariable Long id, @RequestBody AdressDTO adressDTO) {
         return adressService.findById(id) == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
-                ResponseEntity.ok(adressService.alterPerson(id, adressModel));
+                ResponseEntity.ok(adressService.alterPerson(id, adressDTO));
     }
 }

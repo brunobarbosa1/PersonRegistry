@@ -1,7 +1,6 @@
 package dev.bruno.PersonRegistry.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Builder;
 import java.util.List;
@@ -31,7 +30,7 @@ public class AdressModel {
     public AdressModel(){
     }
 
-    public AdressModel(Long id, String adress, short number, String neighborhood,  List<PersonModel> person) {
+    public AdressModel(Long id, String adress, short number, String neighborhood, List<PersonModel> person) {
         this.id = id;
         this.adress = adress;
         this.number = number;
