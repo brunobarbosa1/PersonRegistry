@@ -1,7 +1,11 @@
 package dev.bruno.PersonRegistry.service;
 
-import dev.bruno.PersonRegistry.dtos.PersonDTO;
-import dev.bruno.PersonRegistry.mappers.PersonMapper;
+import dev.bruno.PersonRegistry.dtos.person.CreatePersonDTO;
+import dev.bruno.PersonRegistry.dtos.person.ListPersonDTO;
+import dev.bruno.PersonRegistry.dtos.person.UpdatePersonDTO;
+import dev.bruno.PersonRegistry.mappers.person.CreatePersonMapper;
+import dev.bruno.PersonRegistry.mappers.person.ListPersonMapper;
+import dev.bruno.PersonRegistry.mappers.person.UpdatePersonMapper;
 import dev.bruno.PersonRegistry.model.PersonModel;
 import dev.bruno.PersonRegistry.repositorys.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -11,43 +15,47 @@ import java.util.List;
 public class PersonService {
 
     private final PersonRepository personRepository;
-    private final PersonMapper personMapper;
+    private final CreatePersonMapper createPersonMapper;
+    private final ListPersonMapper listPersonMapper;
+    private final UpdatePersonMapper updatePersonMapper;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
+    public PersonService(PersonRepository personRepository, CreatePersonMapper createPersonMapper, ListPersonMapper listPersonMapper, UpdatePersonMapper updatePersonMapper) {
         this.personRepository = personRepository;
-        this.personMapper = personMapper;
+        this.createPersonMapper = createPersonMapper;
+        this.listPersonMapper = listPersonMapper;
+        this.updatePersonMapper = updatePersonMapper;
     }
 
-    public List<PersonDTO> findAll(){
+    public List<ListPersonDTO> personFindAll(){
         return personRepository.findAll().stream()
-                .map(personMapper::mapsDtoToEntity)
+                .map(listPersonMapper::dtoToEntity)
                 .toList();
     }
 
-    public PersonDTO findById(Long id){
+    public ListPersonDTO personFindById(Long id){
         PersonModel personModel = personRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Person with id " + id + " not found"));
-        return personMapper.mapsDtoToEntity(personModel);
+        return listPersonMapper.dtoToEntity(personModel);
     }
 
-    public void createPerson(PersonDTO personDTO){
-        PersonModel personModel = personMapper.mapsEntityToDto(personDTO);
+    public void createPerson(CreatePersonDTO createPersonDTO){
+        PersonModel personModel = createPersonMapper.entityToDto(createPersonDTO);
         personRepository.save(personModel);
     }
 
-    public void deleteById(Long id){
+    public void personDeleteById(Long id){
         personRepository.deleteById(id);
     }
 
-    public PersonDTO alterPerson(Long id, PersonDTO personDTO){
+    public UpdatePersonDTO updatePerson(Long id, UpdatePersonDTO updatePersonDTO){
        PersonModel person = personRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Person not found!"));
        PersonModel newPerson = PersonModel.builder()
-               .name(personDTO.getName() != null ? personDTO.getName() : person.getName())
-               .email(personDTO.getEmail() != null ? personDTO.getEmail() : person.getEmail())
-               .adress(personDTO.getAdress() != null ? personDTO.getAdress() : person.getAdress())
+               .name(updatePersonDTO.name() != null ? updatePersonDTO.name() : person.getName())
+               .adress(updatePersonDTO.adressModel() != null ? updatePersonDTO.adressModel() : person.getAdress())
+               .email(person.getEmail())
                .id(person.getId())
         .build();
-        return personMapper.mapsDtoToEntity(personRepository.save(newPerson));
+        return updatePersonMapper.dtoToEntity(personRepository.save(newPerson));
     }
 }

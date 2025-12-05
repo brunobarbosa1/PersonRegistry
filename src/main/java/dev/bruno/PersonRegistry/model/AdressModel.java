@@ -27,8 +27,8 @@ public class AdressModel {
     @JsonIgnore
     private List<PersonModel> person;
 
-    public AdressModel(){
-    }
+
+    public AdressModel() {}
 
     public AdressModel(Long id, String adress, short number, String neighborhood, List<PersonModel> person) {
         this.id = id;
@@ -37,6 +37,13 @@ public class AdressModel {
         this.neighborhood = neighborhood;
         this.person = person;
     }
+
+    public AdressModel(String adress, short number, String neighborhood) {
+        this.adress = adress;
+        this.number = number;
+        this.neighborhood = neighborhood;
+    }
+
 
     public Long getId() {
         return id;
@@ -78,14 +85,4 @@ public class AdressModel {
         this.person = person;
     }
 
-    @Override
-    public String toString() {
-        return "AdressModel{" +
-                "id=" + id +
-                ", adress='" + adress + '\'' +
-                ", number=" + number +
-                ", neighborhood='" + neighborhood + '\'' +
-                ", person=" + person +
-                '}';
-    }
 }
