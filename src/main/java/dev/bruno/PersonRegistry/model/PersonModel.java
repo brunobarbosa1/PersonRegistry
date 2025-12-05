@@ -22,13 +22,29 @@ public class PersonModel {
     @JoinColumn(name = "adress_id")
     private AdressModel adress;
 
-    public PersonModel() {
-    }
+    public PersonModel() {}
 
     public PersonModel(Long id, String name, String email, AdressModel adress) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.adress = adress;
+    }
+
+    public PersonModel(String name, String email, AdressModel adress) {
+        this.name = name;
+        this.email = email;
+        this.adress = adress;
+    }
+
+    public PersonModel(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public PersonModel(String name, AdressModel adress) {
+        this.name = name;
         this.adress = adress;
     }
 
@@ -67,13 +83,12 @@ public class PersonModel {
         this.email = email;
    }
 
-    @Override
-    public String toString() {
-        return "PersonModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", adress=" + adress +
-                '}';
-    }
+   public AdressModel getAdressModel() {
+        return adress;
+   }
+
+   public void setAdressModel(AdressModel adress) {
+        this.adress = adress;
+   }
+
 }

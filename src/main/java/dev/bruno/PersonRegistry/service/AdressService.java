@@ -1,7 +1,11 @@
 package dev.bruno.PersonRegistry.service;
 
-import dev.bruno.PersonRegistry.dtos.AdressDTO;
-import dev.bruno.PersonRegistry.mappers.AdressMapper;
+import dev.bruno.PersonRegistry.dtos.adress.CreateAdressDTO;
+import dev.bruno.PersonRegistry.dtos.adress.ListAdressDTO;
+import dev.bruno.PersonRegistry.dtos.adress.UpdateAdressDTO;
+import dev.bruno.PersonRegistry.mappers.adress.CreateAdressMapper;
+import dev.bruno.PersonRegistry.mappers.adress.ListAdressMapper;
+import dev.bruno.PersonRegistry.mappers.adress.UpdateAdressMapper;
 import dev.bruno.PersonRegistry.model.AdressModel;
 import dev.bruno.PersonRegistry.repositorys.AdressRepository;
 import org.springframework.stereotype.Service;
@@ -11,43 +15,45 @@ import java.util.List;
 public class AdressService {
 
     private final AdressRepository adressRepository;
-    private final AdressMapper adressMapper;
+    private final CreateAdressMapper createAdressMapper;
+    private final ListAdressMapper listAdressMapper;
+    private final UpdateAdressMapper updateAdressMapper;
 
-    public AdressService(AdressRepository adressRepository, AdressMapper adressMapper) {
+    public AdressService(AdressRepository adressRepository, CreateAdressMapper createAdressMapper, ListAdressMapper listAdressMapper,  UpdateAdressMapper updateAdressMapper) {
         this.adressRepository = adressRepository;
-        this.adressMapper = adressMapper;
+        this.createAdressMapper = createAdressMapper;
+        this.listAdressMapper = listAdressMapper;
+        this.updateAdressMapper = updateAdressMapper;
     }
 
-    public List<AdressDTO> findAll(){
+    public List<ListAdressDTO> adressGetAll(){
       return adressRepository.findAll().stream()
-              .map(adressMapper::mapsDtoToEntity)
+              .map(listAdressMapper::dtoToEntity)
                .toList();
     }
 
-    public AdressDTO findById(Long id){
+    public ListAdressDTO adressById(Long id){
         AdressModel adressModel = adressRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Adrress with id " + id + " not found"));
-        return adressMapper.mapsDtoToEntity(adressModel);
+        return listAdressMapper.dtoToEntity(adressModel);
     }
 
-    public void createPerson(AdressDTO adressDTO){
-        adressRepository.save(adressMapper.mapsEntityToDto(adressDTO));
+    public void createAdress(CreateAdressDTO createAdressDTO){
+        adressRepository.save(createAdressMapper.entityToDto(createAdressDTO));
     }
 
     public void deleteById(Long id){
         adressRepository.deleteById(id);
     }
 
-    public AdressDTO alterPerson(Long id, AdressDTO adressDTO){
+    public UpdateAdressDTO alterAdress(Long id, UpdateAdressDTO updateAdressDTO){
         AdressModel adress = adressRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Adress not found!"));
         AdressModel newAdress = AdressModel.builder()
-                .id(adress.getId())
-                .adress(adressDTO.getAdress() != null ? adressDTO.getAdress() : adress.getAdress())
-                .number(adressDTO.getNumber() != 0 ? adressDTO.getNumber() : adress.getNumber())
-                .neighborhood(adressDTO.getNeighborhood() != null ? adressDTO.getNeighborhood() : adress.getNeighborhood())
-                .person(adressDTO.getPerson() != null ? adressDTO.getPerson() : adress.getPerson())
+                .adress(updateAdressDTO.adress() != null ? updateAdressDTO.adress() : adress.getAdress())
+                .number(updateAdressDTO.number() != 0 ? updateAdressDTO.number() : adress.getNumber())
+                .neighborhood(updateAdressDTO.neighborhood() != null ? updateAdressDTO.neighborhood() : adress.getNeighborhood())
                 .build();
-        return adressMapper.mapsDtoToEntity(adressRepository.save(newAdress));
+        return updateAdressMapper.dtoToEntity(adressRepository.save(newAdress));
     }
 }
