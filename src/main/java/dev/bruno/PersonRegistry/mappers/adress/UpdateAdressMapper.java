@@ -15,6 +15,18 @@ public class UpdateAdressMapper {
         );
     }
 
+    public void merge(AdressModel adressModel, UpdateAdressDTO updateAdressDTO) {
+        if (updateAdressDTO.adress() != null) {
+            adressModel.setAdress(updateAdressDTO.adress());
+        }
+        if (updateAdressDTO.neighborhood() != null) {
+            adressModel.setNeighborhood(updateAdressDTO.neighborhood());
+        }
+        if (updateAdressDTO.number() != 0){
+            adressModel.setNumber(updateAdressDTO.number());
+        }
+    }
+
     public UpdateAdressDTO dtoToEntity(AdressModel adressModel) {
         return new UpdateAdressDTO(
                 adressModel.getAdress(),

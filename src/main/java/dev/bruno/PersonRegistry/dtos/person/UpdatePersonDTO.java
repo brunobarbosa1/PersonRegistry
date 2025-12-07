@@ -4,6 +4,6 @@ import dev.bruno.PersonRegistry.model.AdressModel;
 
 public record UpdatePersonDTO(
         String name,
-        AdressModel adressModel
+        AdressModel adress
 ) {
 }

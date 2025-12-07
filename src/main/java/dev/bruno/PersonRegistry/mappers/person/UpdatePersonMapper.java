@@ -1,6 +1,7 @@
 package dev.bruno.PersonRegistry.mappers.person;
 
 import dev.bruno.PersonRegistry.dtos.person.UpdatePersonDTO;
+import dev.bruno.PersonRegistry.model.AdressModel;
 import dev.bruno.PersonRegistry.model.PersonModel;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ public class UpdatePersonMapper {
     public PersonModel entityToDto(UpdatePersonDTO updatePersonDTO) {
         return new PersonModel(
                 updatePersonDTO.name(),
-                updatePersonDTO.adressModel()
+                updatePersonDTO.adress()
         );
     }
 
@@ -18,8 +19,8 @@ public class UpdatePersonMapper {
         if (updatePersonDTO.name() != null) {
             personModel.setName(updatePersonDTO.name());
         }
-        if (updatePersonDTO.adressModel() != null) {
-            personModel.setAdress(updatePersonDTO.adressModel());
+        if (updatePersonDTO.adress() != null) {
+            personModel.setAdress(updatePersonDTO.adress());
         }
     }
 
