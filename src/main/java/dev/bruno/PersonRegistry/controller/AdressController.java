@@ -4,11 +4,14 @@ import dev.bruno.PersonRegistry.dtos.adress.CreateAdressDTO;
 import dev.bruno.PersonRegistry.dtos.adress.ListAdressDTO;
 import dev.bruno.PersonRegistry.dtos.adress.UpdateAdressDTO;
 import dev.bruno.PersonRegistry.service.AdressService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+@Tag(name = "Cadastro de Endereços")
 
 @RestController
 @RequestMapping("/adress")

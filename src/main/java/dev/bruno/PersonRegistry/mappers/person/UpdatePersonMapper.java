@@ -1,7 +1,6 @@
 package dev.bruno.PersonRegistry.mappers.person;
 
 import dev.bruno.PersonRegistry.dtos.person.UpdatePersonDTO;
-import dev.bruno.PersonRegistry.model.AdressModel;
 import dev.bruno.PersonRegistry.model.PersonModel;
 import org.springframework.stereotype.Component;
 
