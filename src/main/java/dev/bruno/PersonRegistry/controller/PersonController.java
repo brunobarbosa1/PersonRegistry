@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Tag(name = "Cadastro de Pessoas")
+
 @RestController
 @RequestMapping("/person")
 public class PersonController {
@@ -25,8 +27,8 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @Tag(name = "create", description = "Adiciona uma pessoa no Banco de Dados")
     @Operation(
+            summary = "Cria uma pessoa",
             description = "Essa rota cria uma pessoa com o seu respectivo endereço e insere no Banco de Dados."
     )
     @ApiResponses(value = {
@@ -39,8 +41,8 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Tag(name = "list", description = "Lista todas as pessoas")
     @Operation(
+            summary = "Lista pessoas cadastradas",
             description = "Essa rota lista todas as pessoas criadas"
     )
     @ApiResponses(value = {
@@ -54,8 +56,8 @@ public class PersonController {
                 ResponseEntity.ok(personService.personFindAll());
     }
 
-    @Tag(name = "listById", description = "Lista uma pessoa por id")
     @Operation(
+            summary = "Lista uma pessoa por id",
             description = "Essa rota lista uma pessoa por id"
     )
     @ApiResponses(value = {
@@ -69,8 +71,8 @@ public class PersonController {
                 ResponseEntity.ok(personService.personFindById(id));
     }
 
-    @Tag(name = "delete", description = "Deleta uma pessoa por id")
     @Operation(
+            summary = "Deleta uma pessoa por id",
             description = "Essa rota deleta uma pessoa por id"
     )
     @ApiResponses(value = {
@@ -92,8 +94,8 @@ public class PersonController {
         }
     }
 
-    @Tag(name = "update", description = "Atualiza os campos de uma pessoa")
     @Operation(
+            summary = "Atualiza uma pessoa (nome ou endereço)",
             description = "Essa rota atualiza o nome ou endereço de uma pessoa"
     )
     @ApiResponses(value = {
