@@ -37,11 +37,6 @@ public class PersonModel {
         this.adress = adress;
     }
 
-    public PersonModel(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
 
     public PersonModel(String name, AdressModel adress) {
         this.name = name;

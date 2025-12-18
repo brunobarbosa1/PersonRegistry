@@ -1,5 +1,6 @@
 package dev.bruno.PersonRegistry.service;
 
+import dev.bruno.PersonRegistry.controller.exceptions.AdressNotFoundException;
 import dev.bruno.PersonRegistry.dtos.adress.CreateAdressDTO;
 import dev.bruno.PersonRegistry.dtos.adress.ListAdressDTO;
 import dev.bruno.PersonRegistry.dtos.adress.UpdateAdressDTO;
@@ -26,32 +27,41 @@ public class AdressService {
         this.updateAdressMapper = updateAdressMapper;
     }
 
+
+    public void createAdress(CreateAdressDTO createAdressDTO){
+        adressRepository.save(createAdressMapper.entityToDto(createAdressDTO));
+    }
+
+
     public List<ListAdressDTO> adressGetAll(){
       return adressRepository.findAll().stream()
               .map(listAdressMapper::dtoToEntity)
                .toList();
     }
 
+
     public ListAdressDTO adressById(Long id){
         AdressModel adressModel = adressRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Adrress with id " + id + " not found"));
+                () -> new AdressNotFoundException("Adress not found"));
         return listAdressMapper.dtoToEntity(adressModel);
     }
 
-    public void createAdress(CreateAdressDTO createAdressDTO){
-        adressRepository.save(createAdressMapper.entityToDto(createAdressDTO));
-    }
-
-    public void deleteById(Long id){
-        adressRepository.deleteById(id);
-    }
 
     public UpdateAdressDTO alterAdress(Long id, UpdateAdressDTO updateAdressDTO){
         AdressModel adress = adressRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Adress not found!"));
+                () -> new AdressNotFoundException("Adress not found"));
 
         updateAdressMapper.merge(adress, updateAdressDTO);
-        adress =  adressRepository.save(adress);
+        adress = adressRepository.save(adress);
         return updateAdressMapper.dtoToEntity(adress);
+    }
+
+
+    public void deleteById(Long id){
+
+        AdressModel adressModel = adressRepository.findById(id).orElseThrow(
+                () ->  new AdressNotFoundException("Adress not found"));
+
+        adressRepository.deleteById(id);
     }
 }

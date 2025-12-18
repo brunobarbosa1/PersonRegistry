@@ -1,5 +1,6 @@
 package dev.bruno.PersonRegistry.service;
 
+import dev.bruno.PersonRegistry.controller.exceptions.PersonNotFoundException;
 import dev.bruno.PersonRegistry.dtos.person.CreatePersonDTO;
 import dev.bruno.PersonRegistry.dtos.person.ListPersonDTO;
 import dev.bruno.PersonRegistry.dtos.person.UpdatePersonDTO;
@@ -34,7 +35,7 @@ public class PersonService {
 
     public ListPersonDTO personFindById(Long id){
         PersonModel personModel = personRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Person with id " + id + " not found"));
+                () -> new PersonNotFoundException("Pessoa com id " + id + " não existe"));
         return listPersonMapper.dtoToEntity(personModel);
     }
 
@@ -44,13 +45,17 @@ public class PersonService {
     }
 
     public void personDeleteById(Long id){
+
+        PersonModel personModel = personRepository.findById(id).orElseThrow(
+                () -> new PersonNotFoundException("Pessoa não existe!"));
+
         personRepository.deleteById(id);
     }
 
 
     public UpdatePersonDTO updatePerson(Long id, UpdatePersonDTO updatePersonDTO){
        PersonModel person = personRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Person not found!"));
+                () -> new PersonNotFoundException("Person not found!"));
 
        updatePersonMapper.merge(person, updatePersonDTO);
        person = personRepository.save(person);
