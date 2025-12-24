@@ -41,7 +41,7 @@ cd PersonRegistry
 
 Suba o banco de dados (certifique-se de ter docker baixado na máquina):
 
-docker run up -d
+docker compose up -d
 ```
 ### 2. Configure o banco de dados (PosgreSQL)
 ```bash
