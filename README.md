@@ -28,8 +28,9 @@ Cada Pessoa pode ter **apenas um Endereço**, mas um Endereço pode possuir **v�
   - Spring Data JPA
 - **Hibernate**
 - **SpringDoc OpenAPI (Swagger UI)**
-- **Banco de dados**: H2 database
+- **Banco de dados**: Postgres via Docker
 - **Maven**
+- **Docker**
 
 ## 🚀 Como executar o projeto
 
@@ -37,16 +38,21 @@ Cada Pessoa pode ter **apenas um Endereço**, mas um Endereço pode possuir **v�
 ```bash
 git clone https://github.com/SEU-USUARIO/dev.bruno.PersonRegistry
 cd PersonRegistry
+
+Suba o banco de dados (certifique-se de ter docker baixado na máquina):
+
+docker run up -d
 ```
-### 2. Configure o banco de dados (se necessário)
+### 2. Configure o banco de dados (PosgreSQL)
 ```bash
 No arquivo application.properties ou application.yml.
 
-Exemplo para H2:
+Posgres:
 
-spring.datasource.url=jdbc:h2:mem:persons
-spring.jpa.hibernate.ddl-auto=update (create: o banco apaga os dados ao reeniciar o projeto)
-spring.h2.console.enabled=true
+spring.datasource.url=jdbc:postgresql://localhost:5431/db_personregistry
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.datasource.driver-class=org.postgresql.Driver
 ```
 ### 3. Execute o projeto usando Maven:
 
@@ -114,15 +120,6 @@ src/
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `id` | `void` | Deleta uma pessoa por ID |
-
-```http
-  PUT /{id}
-```
-
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `id` | `NinjaDTO` | Altera uma pessoa por ID |
-
 
 ### 🧩 Endpoints Endereço
 
